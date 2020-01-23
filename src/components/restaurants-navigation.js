@@ -1,19 +1,37 @@
 import React from 'react'
+import {Menu, Rate, Row, Col} from 'antd'
 
-function RestaurantsNavigation(props) {
+const RestaurantsNavigation = ({restaurants, onRestaurantChange}) => {
+  const {Item} = Menu
+
+  const averageRate = reviews => {
+    return (
+      reviews.reduce((count, {rating}) => count + rating, 0) / reviews.length
+    )
+  }
+
   return (
-    <div>
-      {props.restaurants.map(restaurant => (
-        <button
+    <Menu
+      defaultSelectedKeys={restaurants[0].id}
+      style={{width: '90%'}}
+      mode="inline"
+    >
+      {restaurants.map(restaurant => (
+        <Item
           key={restaurant.id}
           onClick={() => {
-            props.onRestaurantChange(restaurant.id)
+            onRestaurantChange(restaurant.id)
           }}
         >
-          {restaurant.name}
-        </button>
+          <Row>
+            <Col span={12}>{restaurant.name}</Col>
+            <Col span={12}>
+              <Rate value={averageRate(restaurant.reviews)} disabled />
+            </Col>
+          </Row>
+        </Item>
       ))}
-    </div>
+    </Menu>
   )
 }
 
