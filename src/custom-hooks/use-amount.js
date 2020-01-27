@@ -1,16 +1,17 @@
-import {useState} from 'react'
+import {useState, useCallback} from 'react'
 
-export const useAmount = (initialValue = 0) => {
-  const [amount, setAmount] = useState(initialValue)
-  const decrease = () => {
-    setAmount(amount > 0 ? amount - 1 : 0)
-  }
-  const increase = () => {
+export function useAmount(initialState = 0) {
+  const [amount, setAmount] = useState(initialState)
+  const increase = useCallback(() => {
     setAmount(amount + 1)
-  }
+  }, [amount])
+  const decrease = useCallback(() => {
+    setAmount(amount > 0 ? amount - 1 : 0)
+  }, [amount])
+
   return {
     amount,
-    decrease,
     increase,
+    decrease,
   }
 }
