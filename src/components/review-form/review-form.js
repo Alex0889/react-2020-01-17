@@ -1,14 +1,28 @@
 import {Button, Card, Col, Form, Input, Row, Typography, Rate} from 'antd'
-import React from 'react'
+import React, {useState} from 'react'
+import {connect} from 'react-redux'
 import cx from 'classnames'
 
 import styles from './review-form.module.css'
+import {addReview} from '../../store/action-creators'
 
-const ReviewForm = ({id}) => {
+const ReviewForm = ({id, addReview}) => {
+  const [name, setName] = useState(null)
+  const [text, setText] = useState(null)
+  const [rating, setRating] = useState(0)
+  const review = {id, name, text, rating}
+
+  const resetForm = () => {
+    setName(null)
+    setText(null)
+    setRating(0)
+  }
+
   const handleSubmit = event => {
     event.preventDefault()
     event.persist()
-    console.log('Submit', event)
+    addReview(review)
+    resetForm()
   }
 
   return (
@@ -19,10 +33,30 @@ const ReviewForm = ({id}) => {
             Leave your review
           </Typography.Title>
           <Form onSubmit={handleSubmit}>
-            <Input placeholder="Your name" className={cx(styles.inputName)} />
-            <Input.TextArea rows={3} size="large" />
+            <Input
+              placeholder="Your name"
+              className={cx(styles.inputName)}
+              value={name}
+              onChange={e => {
+                setName(e.target.value)
+              }}
+            />
+            <Input.TextArea
+              rows={3}
+              size="large"
+              value={text}
+              onChange={e => {
+                setText(e.target.value)
+              }}
+            />
             <div>
-              Rating: <Rate value={0} />
+              Rating:{' '}
+              <Rate
+                value={rating}
+                onChange={value => {
+                  setRating(+value)
+                }}
+              />
             </div>
             <Button htmlType="submit" className={styles.submitButton}>
               PUBLISH REVIEW
@@ -34,4 +68,8 @@ const ReviewForm = ({id}) => {
   )
 }
 
-export default ReviewForm
+const mapDispatchToProps = {
+  addReview,
+}
+
+export default connect(null, mapDispatchToProps)(ReviewForm)

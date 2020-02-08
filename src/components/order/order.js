@@ -15,7 +15,6 @@ function Order({className, orderedDishes}) {
   if (dishes.length === 0) {
     return null
   }
-  console.log('Order render', className, orderedDishes)
   return (
     <div className={cx(styles.cart, className)}>
       <TransitionGroup>

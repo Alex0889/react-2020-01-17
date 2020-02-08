@@ -1,5 +1,4 @@
 import React, {useCallback} from 'react'
-import PropTypes from 'prop-types'
 import {Card, Typography, Button, Row, Col} from 'antd'
 import styles from './dish.module.css'
 import {connect, useSelector} from 'react-redux'
@@ -8,7 +7,7 @@ import {selectAmountFromCart, selectDish} from '../../store/selectors'
 
 function Dish(props) {
   const {
-    id,
+    // id,
 
     // from store
     amount,
@@ -17,7 +16,6 @@ function Dish(props) {
   } = props
 
   const selectDishMemo = useCallback(state => selectDish(state, props), [props])
-
   const dish = useSelector(selectDishMemo)
 
   return (
@@ -61,18 +59,6 @@ function Dish(props) {
     </Card>
   )
 }
-
-export const DishProps = {
-  id: PropTypes.string.isRequired,
-  dish: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string,
-    ingredients: PropTypes.arrayOf(PropTypes.string),
-    price: PropTypes.number,
-  }),
-}
-
-Dish.propTypes = DishProps
 
 const mapStateToProps = (state, ownProps) => {
   return {
