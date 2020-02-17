@@ -1,4 +1,9 @@
-import {ADD_TO_CART, REMOVE_FROM_CART} from '../common'
+import {
+  ADD_TO_CART,
+  REMOVE_ALL_DISHES_BY_ID,
+  REMOVE_FROM_CART,
+  CLEAR_CART,
+} from '../common'
 
 export const cartReducer = (
   cartState = {
@@ -24,6 +29,22 @@ export const cartReducer = (
         [id]: cartState[id] - 1,
       }
     }
+
+    case REMOVE_ALL_DISHES_BY_ID: {
+      const {id} = action.payload
+      if (!cartState[id]) {
+        return cartState
+      }
+      return {
+        ...cartState,
+        [id]: null,
+      }
+    }
+
+    case CLEAR_CART: {
+      return {}
+    }
+
     default: {
       return cartState
     }

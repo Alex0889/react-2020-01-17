@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import Restaurants from '../restaurants'
 import {Layout} from 'antd'
 import Header from '../header'
 import './app.css'
@@ -8,6 +7,7 @@ import {Provider} from 'react-redux'
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import CounterPage from '../routes/counter'
 import RestaurantsPage from '../routes/restaurants'
+import OrderPage from '../routes/order'
 
 class App extends Component {
   render() {
@@ -28,6 +28,7 @@ class App extends Component {
                     exact
                     render={props => <RestaurantsPage />}
                   />
+                  <Route path={'/order'} component={OrderPage} exact />
                   <Route path={'/'} render={() => <h1>Page Not Found</h1>} />
                 </Switch>
               </Layout.Content>

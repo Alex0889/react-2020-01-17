@@ -8,7 +8,9 @@ import {
   FETCH_REVIEWS,
   FETCH_USERS,
   INCREMENT,
+  REMOVE_ALL_DISHES_BY_ID,
   REMOVE_FROM_CART,
+  CLEAR_CART,
   START,
   SUCCESS,
 } from '../common'
@@ -40,6 +42,21 @@ export const removeFromCart = dishId => {
     payload: {
       id: dishId,
     },
+  }
+}
+
+export const removeAllDishesById = dishId => {
+  return {
+    type: REMOVE_ALL_DISHES_BY_ID,
+    payload: {
+      id: dishId,
+    },
+  }
+}
+
+export const clearCart = () => {
+  return {
+    type: CLEAR_CART,
   }
 }
 
